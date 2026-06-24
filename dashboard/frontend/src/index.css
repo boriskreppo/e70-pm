@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: 'Geist', system-ui, sans-serif;
+  margin: 0;
+  background: #08090B;
+  color: #E8EAED;
+  -webkit-font-smoothing: antialiased;
+}
+
+input, textarea, button, select {
+  font-family: 'Geist', system-ui, sans-serif;
+}
+
+.mono {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 currentColor; }
+  70%  { box-shadow: 0 0 0 6px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+.proj-row:hover { background: #0F1114; }
+.task-row:hover { background: #0F1114; }
+.note-row:hover { background: #0F1114; }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.6);
+  cursor: pointer;
+}
+
+/* ── Mobile (375px reference) ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* ── TopBar ── */
+  .topbar-breadcrumb { display: none !important; }
+  .topbar-date       { display: none !important; }
+  .topbar-root { padding: 0 16px !important; }
+
+  /* ── List view: Hero ── */
+  .hero-wrap { padding: 20px 16px 16px !important; }
+  .hero-section { flex-direction: column !important; align-items: flex-start !important; gap: 14px !important; }
+  .hero-title { font-size: 26px !important; }
+  .hero-sub   { display: none !important; }
+
+  /* ── List view: Stats ── */
+  .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .stat-card  { min-height: 110px !important; padding: 18px 16px 14px !important; border-bottom: 1px solid #2C3138; }
+  .stat-card:nth-child(odd)  { border-right: 1px solid #2C3138 !important; }
+  .stat-card:nth-child(even) { border-right: none !important; }
+  .stat-card:nth-child(3),
+  .stat-card:nth-child(4)    { border-bottom: none !important; }
+  .stat-number { font-size: 48px !important; }
+
+  /* ── List view: Toolbar ── */
+  .toolbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    padding: 12px 16px !important;
+  }
+  .toolbar-search { max-width: 100% !important; }
+  .filter-tabs button { padding: 8px 10px !important; font-size: 10px !important; }
+  .view-tabs { display: flex !important; width: 100%; }
+  .view-tabs button { flex: 1 !important; }
+
+  /* ── List view: Project rows ── */
+  .col-headers { display: none !important; }
+  .proj-row {
+    grid-template-columns: 1fr 36px !important;
+    gap: 10px !important;
+    padding: 14px 16px !important;
+  }
+  .proj-row > *:nth-child(1),
+  .proj-row > *:nth-child(3),
+  .proj-row > *:nth-child(4),
+  .proj-row > *:nth-child(5),
+  .proj-row > *:nth-child(6) { display: none !important; }
+
+  /* ── Detail view: Header ── */
+  .detail-pad    { padding: 20px 16px 16px !important; }
+  .detail-title  { font-size: 30px !important; }
+  .detail-meta-row { flex-wrap: wrap !important; gap: 8px !important; row-gap: 6px !important; }
+
+  /* ── Detail view: Meta strip ── */
+  .meta-strip { grid-template-columns: repeat(2, 1fr) !important; }
+  .meta-cell  { padding: 14px 16px !important; }
+  .meta-strip > *:nth-child(1) { border-right: 1px solid #2C3138 !important; border-bottom: 1px solid #2C3138 !important; }
+  .meta-strip > *:nth-child(2) { border-right: none !important; border-bottom: 1px solid #2C3138 !important; }
+  .meta-strip > *:nth-child(3) { border-right: 1px solid #2C3138 !important; }
+  .meta-strip > *:nth-child(4) { border-right: none !important; }
+  .meta-strip > *:nth-child(5) { display: none !important; }
+
+  /* ── Detail view: Body ── */
+  .two-col { grid-template-columns: 1fr !important; }
+  .detail-left { border-right: none !important; }
+
+  /* ── Detail view: Progress section ── */
+  .progress-section { padding: 20px 16px !important; }
+  .progress-legend  { flex-wrap: wrap !important; gap: 10px !important; }
+
+  /* ── Detail view: Tasks ── */
+  .tasks-header    { padding: 14px 16px 10px !important; }
+  .task-search-bar { padding: 0 16px 10px !important; }
+  .task-col-headers { display: none !important; }
+  .task-row {
+    grid-template-columns: 26px 1fr 40px !important;
+    gap: 8px !important;
+    padding: 12px 16px !important;
+  }
+  .task-row > *:nth-child(1),
+  .task-row > *:nth-child(3),
+  .task-row > *:nth-child(5),
+  .task-row > *:nth-child(6),
+  .task-row > *:nth-child(7),
+  .task-row > *:nth-child(8) { display: none !important; }
+  .task-edit-btn { display: none !important; }
+
+  /* ── Detail view: Sidebar (notes) — shown below tasks on mobile ── */
+  .sidebar { display: flex !important; border-top: 1px solid #22262B; }
+  .sidebar-inner { padding: 20px 16px !important; }
+
+  /* ── Detail view: Action buttons ── */
+  .detail-topbar-actions { display: none !important; }
+  .mobile-detail-actions { display: flex !important; }
+
+  /* ── Kanban ── */
+  .kanban-wrap {
+    display: flex !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .kanban-wrap::-webkit-scrollbar { display: none; }
+  .kanban-col { min-width: 272px !important; flex-shrink: 0 !important; border-right: 1px solid #22262B !important; }
+
+  /* ── Modals ── */
+  .modal-inner { width: 95vw !important; }
+}

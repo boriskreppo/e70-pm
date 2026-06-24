@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(launchctl unload *)",
+      "Bash(launchctl load *)",
+      "Bash(curl -s http://localhost:3001/api/health)",
+      "Bash(curl -s -X POST http://localhost:3001/api/auth/login -H \"Content-Type: application/json\" -d '{\"username\":\"boris\",\"password\":\"e70solutions\"}')",
+      "Bash(npm install *)",
+      "Bash(chmod +x /Users/boris/Desktop/e70-pm/dashboard/scripts/backup.sh)",
+      "Bash(bash /Users/boris/Desktop/e70-pm/dashboard/scripts/backup.sh)",
+      "Bash(cp /Users/boris/Desktop/e70-pm/dashboard/com.dashboard.backup.plist ~/Library/LaunchAgents/)",
+      "Bash(launchctl list *)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('JWT ok, username:', d.get\\('username'\\), '| token starts:', d.get\\('token',''\\)[:20]+'...'\\)\")",
+      "Bash(node --experimental-sqlite -e ' *)",
+      "Bash(zip -r '~/Desktop/pm-deploy.zip' backend/server.js backend/package.json backend/package-lock.json backend/ecosystem.config.cjs backend/.env.example backend/dashboard.db backend/public/ frontend/src/ frontend/package.json frontend/package-lock.json frontend/vite.config.js frontend/index.html frontend/postcss.config.js frontend/tailwind.config.js)",
+      "Read(//Users/boris/Desktop/**)"
+    ]
+  }
+}
