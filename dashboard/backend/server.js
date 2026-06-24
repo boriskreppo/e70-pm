@@ -29,6 +29,22 @@ const db = new DatabaseSync(join(__dirname, 'dashboard.db'));
 db.exec('PRAGMA journal_mode = WAL');
 db.exec('PRAGMA foreign_keys = ON');
 
+// Ensure projects table exists (fresh DB) before any migrations run
+db.exec(`
+  CREATE TABLE IF NOT EXISTS projects (
+    id          TEXT PRIMARY KEY,
+    title       TEXT NOT NULL,
+    description TEXT DEFAULT '',
+    deadline    TEXT,
+    status      TEXT DEFAULT 'AKTIVNO',
+    priority    TEXT DEFAULT 'SREDNJI',
+    owner       TEXT DEFAULT '',
+    owner_color TEXT DEFAULT '#C6F432',
+    updated_at  INTEGER,
+    created_at  INTEGER NOT NULL
+  );
+`);
+
 // Migration v1→v2: add priority/owner/owner_color/updated_at, normalize status values
 // Idempotent: checks both the target column and the leftover _projects_v1 temp table
 const projectsTableExists = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='projects'").get();
