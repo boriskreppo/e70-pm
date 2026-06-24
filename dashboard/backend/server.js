@@ -31,15 +31,16 @@ db.exec('PRAGMA foreign_keys = ON');
 
 // Migration v1→v2: add priority/owner/owner_color/updated_at, normalize status values
 // Idempotent: checks both the target column and the leftover _projects_v1 temp table
-const existingCols = db.prepare('PRAGMA table_info(projects)').all().map(c => c.name);
+const projectsTableExists = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='projects'").get();
+const existingCols = projectsTableExists ? db.prepare('PRAGMA table_info(projects)').all().map(c => c.name) : [];
 const v1Exists = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='_projects_v1'").get();
 
 if (v1Exists && existingCols.includes('priority')) {
   // Rename happened but DROP didn't — clean up the leftover temp table
   db.exec('DROP TABLE _projects_v1');
   console.log('✓ Migracija baze: uklonjena preostala _projects_v1 tabela');
-} else if (!existingCols.includes('priority')) {
-  // Full migration needed
+} else if (projectsTableExists && !existingCols.includes('priority')) {
+  // Full migration needed (only if table exists but is old v1 schema)
   db.exec(`
     ALTER TABLE projects RENAME TO _projects_v1;
     CREATE TABLE projects (
